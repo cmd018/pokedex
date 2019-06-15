@@ -1,0 +1,138 @@
+<div class="row pt-2 pb-2">
+  <div class="col text-right">
+    Sort by:
+    <select (change)="onChange($event.target.value)">
+      <option value="asending" selected>Name asending order</option>
+      <option value="desending">Name desending order</option>
+      <option value="number">Number</option>
+    </select>
+  </div>
+</div>
+<div>
+  <tabset>
+    <tab>
+      <ng-template tabHeading>
+        <span
+          class="glyphicon glyphicon-align-justify"
+          aria-hidden="true"
+        ></span>
+        Table view
+      </ng-template>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Height</th>
+              <th scope="col">Weight</th>
+              <th scope="col">Type</th>
+              <th scope="col">Weekness</th>
+              <th scope="col">Next evolution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pokemon of pokemones; index as i">
+              <td>{{pokemon.num}}</td>
+              <td>{{pokemon.name}}</td>
+              <td>{{pokemon.height}}</td>
+              <td>{{pokemon.weight}}</td>
+              <td>
+                <span class="d-block" *ngFor="let type of pokemon.type"
+                  >- {{type}}</span
+                >
+              </td>
+              <td>
+                <span
+                  class="d-block"
+                  *ngFor="let weakness of pokemon.weaknesses"
+                  >- {{weakness}}</span
+                >
+              </td>
+              <td>
+                <span
+                  class="d-block"
+                  *ngFor="let evolution of pokemon.next_evolution"
+                  >{{evolution.num}} {{evolution.name}}</span
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </tab>
+    <tab>
+      <ng-template tabHeading>
+        <span class="glyphicon glyphicon-th" aria-hidden="true"></span> Card
+        view
+      </ng-template>
+      <div class="row pt-2">
+        <!-- Pokemon -->
+        <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let pokemon of pokemones">
+          <div class="flip">
+            <!-- flip -->
+            <div class="mainflip">
+              <div class="frontside">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <p>
+                      <img class=" img-fluid" src="{{pokemon.img}}" alt="{{pokemon.name}}"/>
+                    </p>
+                    <h4 class="card-title">{{pokemon.num}} {{pokemon.name}}</h4>
+                    <hr />
+                    <div class="row">
+                      <dl class="col text-left">
+                        <dt>Height</dt>
+                        <dd>{{pokemon.height}}</dd>
+                      </dl>
+                      <dl class="col">
+                        <dt>Weight</dt>
+                        <dd>{{pokemon.weight}}</dd>
+                      </dl>
+                      <dl class="col">
+                        <dt>Type</dt>
+                        <dd>
+                          <span *ngFor="let type of pokemon.type; let last = last">
+                            <span>{{type}}</span><span *ngIf="!last">, </span>
+                          </span>
+                        </dd>
+                      </dl>
+                    </div>
+                    <hr class="mt-0" />
+                    <p class="card-text text-left">
+                      <b class="d-block">Weaknesses</b>
+                      <span *ngFor="let weakness of pokemon.weaknesses; let last = last">
+                        <span>{{weakness}}</span><span *ngIf="!last">, </span>
+                      </span>
+                    </p>
+                    <p
+                      class="card-text text-left"
+                      *ngIf="pokemon.next_evolution; else elseBlock"
+                    >
+                      <b>Next evolution</b><br />
+                      <span
+                        class="d-block pl-2"
+                        *ngFor="let evolution of pokemon.next_evolution"
+                        >- {{evolution.num}} {{evolution.name}}</span
+                      >
+                    </p>
+                    <ng-template #elseBlock>
+                      <p class="text-left">
+                        <b>Next evolution</b><br /><span class="d-block pl-2"
+                          >- N/A</span
+                        >
+                      </p>
+                    </ng-template>
+                    <a href="#" class="btn btn-primary btn-sm"
+                      ><i class="fa fa-plus"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+  </tabset>
+</div>
